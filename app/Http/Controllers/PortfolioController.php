@@ -10,7 +10,7 @@ class PortfolioController extends Controller
     {
         $data = [
             'nama' => 'Rasya Skp',
-            'profesi' => 'Siswa SMK | Calon Web Developer',
+            'profesi' => 'Siswa SMK | Calon Idaman Mamamu',
             'deskripsi' => "Perkenalkan, nama lengkap saya Rasya. Saat ini saya masih bersekolah di SMK dan duduk di kelas 2.
 Saya memiliki ketertarikan yang besar di bidang teknologi, khususnya dalam pengembangan website.
 Saya terbiasa menggunakan HTML, CSS, dan PHP untuk membangun website yang modern, responsif, dan mudah digunakan.

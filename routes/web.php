@@ -3,5 +3,5 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PortfolioController;
 
-Route::get('/', [PortfolioController::class, 'index']);
-Route::get('/project', [PortfolioController::class, 'project']);
+Route::get('/', [PortfolioController::class, 'index'])->name('home');
+Route::get('/project', [PortfolioController::class, 'project'])->name('project');
