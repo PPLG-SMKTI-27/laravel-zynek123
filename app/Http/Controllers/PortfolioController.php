@@ -3,31 +3,62 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Portfolio;
 
 class PortfolioController extends Controller
 {
-    public function index()
+    // =========================
+    // TAMPILKAN HALAMAN PORTO
+    // =========================
+   public function index()
+{
+    $data = \App\Models\Portfolio::first();
+
+    return view('welcome', [
+        'nama' => $data->nama ?? '',
+        'profesi' => $data->profesi ?? '',
+        'deskripsi' => $data->deskripsi ?? '',
+        'github' => $data->github ?? '',
+        'foto1' => $data->foto_1 ?? null,
+        'foto2' => $data->foto_2 ?? null,
+    ]);
+} 
+
+    // =========================
+    // UPLOAD FOTO (LANGSUNG KE SLOT)
+    // =========================
+    public function uploadFoto(Request $request)
     {
-        $data = [
-            'nama' => 'Rasya Skp',
-            'profesi' => 'Siswa SMK | Calon Idaman Mamamu',
-            'deskripsi' => "Perkenalkan, nama lengkap saya Rasya. Saat ini saya masih bersekolah di SMK dan duduk di kelas 2.
-Saya memiliki ketertarikan yang besar di bidang teknologi, khususnya dalam pengembangan website.
-Saya terbiasa menggunakan HTML, CSS, dan PHP untuk membangun website yang modern, responsif, dan mudah digunakan.
-Selama masa sekolah, saya terus belajar dan mengembangkan kemampuan melalui berbagai latihan dan project sederhana.
-Saya percaya bahwa belajar melalui praktik langsung adalah cara terbaik untuk meningkatkan kemampuan.
-Saya memiliki semangat belajar yang tinggi, disiplin, dan bertanggung jawab.
-Ke depannya, saya bercita-cita menjadi web developer profesional dan menciptakan karya digital yang bermanfaat.",
-            'github' => 'https://github.com/zynek123'
-        ];
+        // CEK LOGIN ADMIN
+        if (!session('login')) {
+            return redirect('/')->with('error', 'Harus login dulu!');
+        }
 
-        return view('welcome', $data);
-    }
+        // VALIDASI
+        $request->validate([
+            'foto' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'slot' => 'required|in:1,2'
+        ]);
 
-    public function project()
-    {
-        $nama = 'Rasya';
+        // AMBIL FILE
+        $file = $request->file('foto');
+        $filename = time() . '.' . $file->getClientOriginalExtension();
 
-        return view('project', compact('nama'));
+        // SIMPAN KE FOLDER PUBLIC/IMG
+        $file->move(public_path('img'), $filename);
+
+        // AMBIL DATA PORTFOLIO
+        $portfolio = Portfolio::first();
+
+        // SIMPAN KE SLOT FOTO
+        if ($request->slot == 1) {
+            $portfolio->foto_1 = $filename;
+        } else {
+            $portfolio->foto_2 = $filename;
+        }
+
+        $portfolio->save();
+
+        return back()->with('success', 'Foto berhasil diupdate!');
     }
 }

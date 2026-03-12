@@ -162,7 +162,7 @@ section {
     margin-top: 50px;
 }
 
-.github a, .btn-back {
+.github a, .btn-back, .btn-project {
     display: inline-block;
     padding: 15px 35px;
     background: #ff9800;
@@ -174,6 +174,11 @@ section {
     border: 4px solid #e65100;
     box-shadow: 0 6px 0 #bf360c;
     transition: 0.1s;
+}
+
+.btn-project.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .github a:hover, .btn-back:hover {
@@ -222,6 +227,27 @@ footer {
     letter-spacing: 1px;
 }
 
+/* DASHBOARD BUTTON */
+.btn-dashboard {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    padding: 12px 20px;
+    background: var(--accent);
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-family: 'Bangers', cursive;
+    border: 3px solid var(--border-wood);
+    box-shadow: 0 5px 0 rgba(0,0,0,0.3);
+    z-index: 9999;
+    transition: 0.2s;
+}
+
+.btn-dashboard:hover {
+    transform: translateY(-2px);
+}
+
 /* ANIMASI */
 .fade-in {
     opacity: 0;
@@ -251,6 +277,12 @@ footer {
 <body>
 
 <div class="toggle" onclick="toggleDark()" id="themeBtn">🌻 Day Mode</div>
+@if(session('login') && !request()->routeIs('dashboard'))
+<a href="{{ route('dashboard') }}" class="btn-dashboard">
+    🛠 Dashboard
+</a>
+@endif
+
 
 <header class="fade-in">
     <h1>@yield('header_title', 'PLANTS vs PORTFOLIO')</h1>
@@ -286,6 +318,8 @@ function toggleDark() {
         btn.innerHTML = "🌻 Day Mode";
     }
 }
+
+
 </script>
 
 </body>
