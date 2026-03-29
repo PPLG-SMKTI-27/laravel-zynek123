@@ -13,7 +13,7 @@
     <h2 style="font-family: 'Luckiest Guy', cursive; font-size: 2rem; margin-bottom: 20px;">🎮 Selamat datang Admin</h2>
 
     <p style="font-size: 1.1rem; margin-bottom: 30px;">
-        Login sebagai: <b style="color: var(--primary);">{{ session('email') }}</b>
+        Login sebagai: <b style="color: var(--primary);">{{ session('email') ?? auth()->user()->email ?? 'Admin' }}</b>
     </p>
 
     @if (session('success'))
@@ -21,7 +21,6 @@
             ✅ {{ session('success') }}
         </div>
     @endif
-
     <!-- PORTFOLIO SECTION -->
     <div style="background: var(--card); border: 6px solid var(--border-wood); padding: 30px; border-radius: 8px; margin-bottom: 40px; box-shadow: 10px 10px 0 rgba(0,0,0,0.2);">
         <h3 style="font-family: 'Luckiest Guy', cursive; font-size: 1.8rem; color: var(--primary); margin-bottom: 25px;">📸 PORTFOLIO</h3>
@@ -59,8 +58,12 @@
     <div style="background: var(--card); border: 6px solid var(--border-wood); padding: 30px; border-radius: 8px; margin-bottom: 40px; box-shadow: 10px 10px 0 rgba(0,0,0,0.2);">
         <h3 style="font-family: 'Luckiest Guy', cursive; font-size: 1.8rem; color: var(--primary); margin-bottom: 25px;">🎯 KELOLA PROJECT</h3>
 
-        <a href="{{ route('project.create') }}" style="display: inline-block; background: #4caf50; border: 4px solid #2e7d32; box-shadow: 0 6px 0 #1b5e20; padding: 15px 35px; color: white; text-decoration: none; font-family: 'Bangers', cursive; font-size: 1.3rem; border-radius: 8px; margin-bottom: 20px; transition: 0.1s;">
-            ➕ Tambah Project Baru
+        <a href="{{ route('project.create') }}" style="display: inline-block; background: #4caf50; border: 4px solid #2e7d32; box-shadow: 0 6px 0 #1b5e20; padding: 15px 35px; color: white; text-decoration: none; font-family: 'Bangers', cursive; font-size: 1.3rem; border-radius: 8px; margin-bottom: 20px; transition: 0.1s; cursor: pointer;"
+            onmouseover="this.style.background='#66bb6a'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 0 #1b5e20';"
+            onmouseout="this.style.background='#4caf50'; this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 0 #1b5e20';"
+            onmousedown="this.style.transform='translateY(4px)'; this.style.boxShadow='0 2px 0 #1b5e20';"
+            onmouseup="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 0 #1b5e20';">
+            ➕ TAMBAH PROJECT BARU
         </a>
 
         @if ($projects && $projects->count() > 0)

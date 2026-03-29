@@ -25,7 +25,7 @@ class ProjectController extends Controller
 
     public function create()
     {
-        if (!session('login')) {
+        if (!session('login') && !auth()->check()) {
             return redirect('/')->with('error', 'Login dulu!');
         }
         
@@ -34,7 +34,7 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
-        if (!session('login')) {
+        if (!session('login') && !auth()->check()) {
             return redirect('/')->with('error', 'Login dulu!');
         }
 
@@ -64,7 +64,7 @@ class ProjectController extends Controller
 
     public function edit($id)
     {
-        if (!session('login')) {
+        if (!session('login') && !auth()->check()) {
             return redirect('/')->with('error', 'Login dulu!');
         }
 
@@ -75,7 +75,7 @@ class ProjectController extends Controller
 
     public function update(Request $request, $id)
     {
-        if (!session('login')) {
+        if (!session('login') && !auth()->check()) {
             return redirect('/')->with('error', 'Login dulu!');
         }
 
@@ -111,7 +111,7 @@ class ProjectController extends Controller
 
     public function destroy($id)
     {
-        if (!session('login')) {
+        if (!session('login') && !auth()->check()) {
             return redirect('/')->with('error', 'Login dulu!');
         }
 

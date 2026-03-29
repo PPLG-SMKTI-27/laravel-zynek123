@@ -32,6 +32,7 @@ public function uploadFoto(Request $request)
 
     $profile = Profile::first();
 
+    
     if (!$profile) {
         Profile::create([
             'foto' => $namaFile

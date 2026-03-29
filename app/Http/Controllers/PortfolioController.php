@@ -29,8 +29,8 @@ class PortfolioController extends Controller
     // =========================
     public function uploadFoto(Request $request)
     {
-        // CEK LOGIN ADMIN
-        if (!session('login')) {
+        // CEK LOGIN ADMIN - support custom session dan Breeze auth
+        if (!session('login') && !auth()->check()) {
             return redirect('/')->with('error', 'Harus login dulu!');
         }
 
@@ -59,6 +59,6 @@ class PortfolioController extends Controller
 
         $portfolio->save();
 
-        return back()->with('success', 'Foto berhasil diupdate!');
+        return redirect('/dashboard')->with('success', 'Foto berhasil diupdate!');
     }
 }
